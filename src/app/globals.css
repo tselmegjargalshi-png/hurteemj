@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@import "@fontsource/noto-sans/400.css";
+@import "@fontsource/noto-sans/600.css";
+@import "@fontsource/noto-sans/700.css";
+
+/*
+ * Дизайн систем: өнгө бүр ердийн горимд WCAG AA (текст 4.5:1, том текст/хил 3:1)-ээс дээш ялгаралтай.
+ * Хэрэглэгчийн тохиргоог <html data-*> шинжээр хэрэгжүүлнэ.
+ */
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-2: #eef1f4;
+  --fg: #15181d; /* bg дээр 17:1 */
+  --muted: #474f5c; /* surface дээр 8:1 */
+  --border: #8a929e; /* 3:1 */
+  --border-soft: #d5d9df;
+  --primary: #0a4a85; /* white дээр 9:1 */
+  --primary-hover: #083a69;
+  --primary-fg: #ffffff;
+  --accent: #0f6b5c; /* white дээр 6.3:1 */
+  --danger: #b0221a; /* white дээр 6.6:1 */
+  --danger-bg: #fdecea;
+  --success: #1b6b35; /* white дээр 6.4:1 */
+  --success-bg: #e8f5ec;
+  --warning: #7a4d00;
+  --warning-bg: #fff4dc;
+  --focus: #ffbf47;
+  --focus-ring: #15181d;
+  --link: #0a4a85;
+  --target: 44px;
+  --radius: 14px;
+}
+
+:root[data-contrast="high"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --fg: #000000;
+  --muted: #000000;
+  --border: #000000;
+  --border-soft: #000000;
+  --primary: #000000;
+  --primary-hover: #000000;
+  --primary-fg: #ffffff;
+  --accent: #000000;
+  --danger: #8a0000;
+  --danger-bg: #ffffff;
+  --success: #004d1a;
+  --success-bg: #ffffff;
+  --warning: #000000;
+  --warning-bg: #ffffff;
+  --link: #0000b3;
+}
+
+:root[data-font="large"] { font-size: 118.75%; }
+:root[data-font="xlarge"] { font-size: 137.5%; }
+:root[data-targets="large"] { --target: 56px; }
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-link: var(--link);
+  --font-sans: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --radius-card: var(--radius);
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Холбоос: өнгөөр л биш, доогуур зураасаар ялгана (контент доторх холбоос). */
+a { color: var(--link); }
+.prose-links a, :root[data-links="underline"] a { text-decoration: underline; text-underline-offset: 3px; }
+:root[data-contrast="high"] a { text-decoration: underline; }
+
+/* Фокус: бүх идэвхтэй элементэд тод харагдах хүрээ (WCAG 2.4.7, 2.4.11). */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--focus);
+  border-radius: 4px;
+}
+:root[data-focus="strong"] :focus,
+:root[data-focus="strong"] :focus-visible {
+  outline: 4px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 9px var(--focus);
+}
+
+/* Хөдөлгөөнт эффект багасгах: системийн тохиргоо болон хэрэглэгчийн сонголт хоёуланг дагана. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+:root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after {
+  animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+}
+
+/* Windows High Contrast / forced colors */
+@media (forced-colors: active) {
+  .btn, .card, .field-input { border: 1px solid CanvasText; }
+}
+
+@layer components {
+  .container-page { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 768px) { .container-page { padding-inline: 1.5rem; } }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: var(--target); min-width: var(--target);
+    padding: 0.5rem 1.25rem; border-radius: 999px; font-weight: 600; line-height: 1.25;
+    border: 2px solid transparent; text-decoration: none; cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+  .btn-primary { background: var(--primary); color: var(--primary-fg); }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-secondary { background: var(--surface); color: var(--fg); border-color: var(--border); }
+  .btn-secondary:hover { background: var(--surface-2); }
+  .btn-danger { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+  .btn-danger:hover { background: var(--danger-bg); }
+  .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.6; cursor: not-allowed; }
+  :root[data-contrast="high"] .btn-primary { border-color: #000; }
+
+  .card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); }
+  :root[data-contrast="high"] .card { border: 2px solid #000; }
+
+  .field-label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+  .field-hint { display: block; color: var(--muted); font-size: 0.9375rem; margin-bottom: 0.375rem; }
+  .field-error { display: block; color: var(--danger); font-weight: 600; margin-bottom: 0.375rem; }
+  .field-input {
+    width: 100%; min-height: var(--target); padding: 0.5rem 0.75rem;
+    background: var(--surface); color: var(--fg);
+    border: 2px solid var(--border); border-radius: 10px; font-size: 1rem;
+  }
+  .field-input[aria-invalid="true"] { border-color: var(--danger); border-width: 3px; }
+  textarea.field-input { min-height: 8rem; }
+
+  .check-row { display: flex; align-items: flex-start; gap: 0.75rem; min-height: var(--target); padding-block: 0.375rem; cursor: pointer; }
+  .check-row input { width: 1.5rem; height: 1.5rem; margin-top: 0.125rem; flex-shrink: 0; accent-color: var(--primary); }
+
+  .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.625rem; border-radius: 999px; font-size: 0.875rem; font-weight: 600; border: 1px solid currentColor; }
+  .notice { border-left: 6px solid; padding: 1rem 1.25rem; border-radius: 8px; }
+  .notice-info { border-color: var(--primary); background: var(--surface-2); }
+  .notice-warning { border-color: var(--warning); background: var(--warning-bg); color: var(--fg); }
+  .notice-success { border-color: var(--success); background: var(--success-bg); }
+  .notice-danger { border-color: var(--danger); background: var(--danger-bg); }
+
+  .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 100; background: var(--focus); color: #000; padding: 0.75rem 1rem; font-weight: 700; border-radius: 0 0 8px 8px; }
+  .skip-link:focus { top: 0; }
+
+  .nav-link { display: inline-flex; align-items: center; min-height: var(--target); padding-inline: 0.75rem; border-radius: 999px; color: var(--fg); text-decoration: none; font-weight: 600; }
+  .nav-link:hover { background: var(--surface-2); text-decoration: underline; }
+  .nav-link[aria-current="page"] { background: var(--surface-2); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+
+  .table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th, .data-table td { text-align: left; padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  .data-table th { font-weight: 700; background: var(--surface-2); }
+}
