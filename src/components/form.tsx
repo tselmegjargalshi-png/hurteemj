@@ -1,17 +1,18 @@
 "use client";
 
-import { createContext, useActionState, useContext, useEffect, useRef, type ReactNode } from "react";
+import { createContext, useActionState, useContext, useEffect, useId, useRef, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { initialState, type ActionState } from "@/lib/forms";
 
-type Ctx = { state: ActionState };
-const FormCtx = createContext<Ctx>({ state: initialState });
+type Ctx = { state: ActionState; uid: string };
+const FormCtx = createContext<Ctx>({ state: initialState, uid: "f" });
 
 export function useFormCtx() {
   return useContext(FormCtx);
 }
 
-export const fieldId = (name: string) => `f-${name.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+/** Нэг хуудсанд хэд хэдэн маягт байж болох тул id бүр маягт тус бүрээр өвөрмөц (давхардсан id нь шошгыг буруу холбодог). */
+export const fieldId = (uid: string, name: string) => `${uid}-${name.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
 
 /**
  * Хүртээмжтэй маягт:
@@ -33,6 +34,7 @@ export function ActionForm({
   resetOnSuccess?: boolean;
 }) {
   const [state, formAction] = useActionState(action, initialState);
+  const uid = `f${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
   const summaryRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -44,7 +46,7 @@ export function ActionForm({
   const errors = Object.entries(state.fieldErrors ?? {});
 
   return (
-    <FormCtx.Provider value={{ state }}>
+    <FormCtx.Provider value={{ state, uid }}>
       <form ref={formRef} action={formAction} className={className} aria-label={label} noValidate>
         {state.status === "error" && (
           <div ref={summaryRef} tabIndex={-1} role="alert" className="notice notice-danger mb-6">
@@ -56,7 +58,7 @@ export function ActionForm({
               <ul className="mt-2 list-disc pl-6">
                 {errors.map(([name, msg]) => (
                   <li key={name}>
-                    <a href={`#${fieldId(name)}`} className="underline">
+                    <a href={`#${fieldId(uid, name)}`} className="underline">
                       {msg}
                     </a>
                   </li>
@@ -93,8 +95,8 @@ type FieldProps = {
 };
 
 export function Field({ name, label, hint, required, defaultValue, as = "input", options, className, ...rest }: FieldProps) {
-  const { state } = useFormCtx();
-  const id = fieldId(name);
+  const { state, uid } = useFormCtx();
+  const id = fieldId(uid, name);
   const error = state.fieldErrors?.[name];
   const value = state.values?.[name] ?? (defaultValue == null ? "" : String(defaultValue));
   const describedBy = [hint ? `${id}-hint` : null, error ? `${id}-error` : null].filter(Boolean).join(" ") || undefined;
@@ -155,8 +157,8 @@ export function Field({ name, label, hint, required, defaultValue, as = "input",
 }
 
 export function Checkbox({ name, label, hint, defaultChecked }: { name: string; label: string; hint?: string; defaultChecked?: boolean }) {
-  const { state } = useFormCtx();
-  const id = fieldId(name);
+  const { state, uid } = useFormCtx();
+  const id = fieldId(uid, name);
   const error = state.fieldErrors?.[name];
   const checked = state.values ? state.values[name] === "on" : !!defaultChecked;
   const describedBy = [hint ? `${id}-hint` : null, error ? `${id}-error` : null].filter(Boolean).join(" ") || undefined;
@@ -206,8 +208,8 @@ export function RadioGroup({
   defaultValue?: string;
   required?: boolean;
 }) {
-  const { state } = useFormCtx();
-  const id = fieldId(name);
+  const { state, uid } = useFormCtx();
+  const id = fieldId(uid, name);
   const error = state.fieldErrors?.[name];
   const current = state.values?.[name] ?? defaultValue;
   return (

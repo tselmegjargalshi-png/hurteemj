@@ -55,7 +55,7 @@ export function DeleteImageForm({ imageId, alt }: { imageId: number; alt: string
   return (
     <ActionForm action={deleteProductImage}>
       <input type="hidden" name="imageId" value={imageId} />
-      <SubmitButton variant="danger" pendingText="Устгаж байна…">Зураг устгах<span className="sr-only">: {alt}</span></SubmitButton>
+      <SubmitButton variant="danger" pendingText="Устгаж байна…">Зураг устгах<span className="sr-only"> {alt}</span></SubmitButton>
     </ActionForm>
   );
 }
@@ -73,14 +73,20 @@ export function CategoryForm({ c }: { c?: { id: number; name: string; descriptio
 }
 
 export function OrderStatusForm({ orderId, allowed }: { orderId: string; allowed: (keyof typeof ORDER_STATUS_LABELS)[] }) {
-  if (!allowed.length) return <p>Энэ захиалгын төлөвийг цаашид өөрчлөх боломжгүй.</p>;
+  // Эцсийн төлөвт хүрсэн ч маягт байрандаа үлдэж, амжилтын мэдэгдэл дэлгэц уншигчид зарлагдсаар байна.
   return (
     <ActionForm action={adminChangeOrderStatus} label="Захиалгын төлөв өөрчлөх">
-      <input type="hidden" name="orderId" value={orderId} />
-      <Field name="status" as="select" label="Шинэ төлөв" required options={allowed.map((k) => ({ value: k, label: ORDER_STATUS_LABELS[k] }))} />
-      <Field name="note" label="Хэрэглэгчид харагдах тэмдэглэл" />
-      <Field name="trackingInfo" label="Хүргэлтийн мэдээлэл (жолоочийн утас, дугаар гэх мэт)" />
-      <SubmitButton>Төлөв шинэчлэх</SubmitButton>
+      {allowed.length === 0 ? (
+        <p>Энэ захиалгын төлөвийг цаашид өөрчлөх боломжгүй.</p>
+      ) : (
+        <>
+          <input type="hidden" name="orderId" value={orderId} />
+          <Field name="status" as="select" label="Шинэ төлөв" required options={allowed.map((k) => ({ value: k, label: ORDER_STATUS_LABELS[k] }))} />
+          <Field name="note" label="Хэрэглэгчид харагдах тэмдэглэл" />
+          <Field name="trackingInfo" label="Хүргэлтийн мэдээлэл (жолоочийн утас, дугаар гэх мэт)" />
+          <SubmitButton>Төлөв шинэчлэх</SubmitButton>
+        </>
+      )}
     </ActionForm>
   );
 }
@@ -143,7 +149,7 @@ export function UserForm({ u }: { u: { id: string; name: string; role: keyof typ
       <div className="flex flex-wrap items-end gap-3">
         <Field className="" name="role" as="select" label="Эрх" defaultValue={u.role} options={Object.entries(ROLE_LABELS).map(([value, label]) => ({ value, label }))} />
         <Field className="" name="status" as="select" label="Төлөв" defaultValue={u.status} options={[{ value: "active", label: "Идэвхтэй" }, { value: "blocked", label: "Блоклосон" }]} />
-        <SubmitButton variant="secondary">Хадгалах<span className="sr-only">: {u.name}</span></SubmitButton>
+        <SubmitButton variant="secondary">Хадгалах<span className="sr-only"> {u.name}</span></SubmitButton>
       </div>
     </ActionForm>
   );

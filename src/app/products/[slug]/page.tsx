@@ -161,7 +161,7 @@ export default async function ProductPage({ params }: Props) {
         ) : (
           <p className="mt-2 text-muted">Одоогоор үнэлгээ алга.</p>
         )}
-        {canReview && !alreadyReviewed && <ReviewForm productId={p.id} />}
+        {canReview && <ReviewForm productId={p.id} already={alreadyReviewed} />}
         {!canReview && <p className="mt-3 text-sm text-muted">Үнэлгээг зөвхөн энэ бүтээгдэхүүнийг хүлээн авсан худалдан авагч бичнэ.</p>}
       </section>
 

@@ -38,7 +38,7 @@ export function AddToCartForm({ productId, productName, maxQty }: { productId: s
           </select>
         </div>
         <SubmitButton pendingText="Нэмж байна…">
-          Сагсанд нэмэх<span className="sr-only">: {productName}</span>
+          Сагсанд нэмэх<span className="sr-only"> {productName}</span>
         </SubmitButton>
       </div>
       <Status state={state} />
@@ -99,7 +99,7 @@ export function CartView({ lines }: { lines: Line[] }) {
                 <input type="hidden" name="productId" value={undo.undoProductId} />
                 <input type="hidden" name="quantity" value={undo.undoQuantity} />
                 <SubmitButton variant="secondary" pendingText="Буцааж байна…">
-                  Буцаах<span className="sr-only">: {undo.undoName}-г сагсанд эргүүлж нэмэх</span>
+                  Буцаах<span className="sr-only"> {undo.undoName}-г сагсанд эргүүлж нэмэх</span>
                 </SubmitButton>
               </form>
             )}
@@ -137,7 +137,7 @@ export function CartView({ lines }: { lines: Line[] }) {
                     <input type="hidden" name="productId" value={l.productId} />
                     <input type="hidden" name="prevQuantity" value={l.quantity} />
                     <SubmitButton variant="danger" pendingText="Хасаж байна…">
-                      Хасах<span className="sr-only">: {l.name}</span>
+                      Хасах<span className="sr-only"> {l.name}</span>
                     </SubmitButton>
                   </form>
                 </div>
@@ -159,7 +159,7 @@ function LineQty({ line, action }: { line: Line; action: (fd: FormData) => void 
       <input type="hidden" name="productId" value={line.productId} />
       <div>
         <label htmlFor={`qty-${line.productId}`} className="field-label">
-          Тоо ширхэг<span className="sr-only">: {line.name}</span>
+          Тоо ширхэг<span className="sr-only"> {line.name}</span>
         </label>
         <select key={line.quantity} id={`qty-${line.productId}`} name="quantity" defaultValue={String(line.quantity)} className="field-input w-24">
           {options.map((n) => (

@@ -93,7 +93,7 @@ body {
 }
 
 /* Холбоос: өнгөөр л биш, доогуур зураасаар ялгана (контент доторх холбоос). */
-a { color: var(--link); }
+@layer base { a { color: var(--link); } }
 .prose-links a, :root[data-links="underline"] a { text-decoration: underline; text-underline-offset: 3px; }
 :root[data-contrast="high"] a { text-decoration: underline; }
 
