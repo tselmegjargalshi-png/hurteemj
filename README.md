@@ -59,7 +59,7 @@ npm run test:e2e   # туршилтын DB (нэрэнд "test" агуулсан
 1. Vercel дээр repo-г Import хийнэ (Next.js автоматаар танигдана).
 2. PostgreSQL үүсгэнэ (Neon / Supabase / Vercel Marketplace) → `DATABASE_URL` Environment Variable-д нууцаар тохируулна.
 3. `APP_URL`-г production хаягаар тохируулна.
-4. Анхны migration: локалаас `DATABASE_URL=<prod> npm run db:migrate && npm run db:seed && npm run db:create-admin`.
+4. Migration, ангиллын seed, админ үүсгэх нь `vercel-build` скриптээр deploy бүрт автоматаар ажиллана (`DATABASE_URL`; админ нь `ADMIN_EMAIL` + `ADMIN_PASSWORD` байвал). Нууц утгуудыг зөвхөн Vercel-ийн Environment Variables-д тохируулна.
 5. Нууц түлхүүрүүд (`QPAY_*`, `ANTHROPIC_API_KEY`, `MAPS_API_KEY`) зөвхөн серверийн орчны хувьсагчид; клиент кодод орохгүй.
 
 ## Аюулгүй байдал
