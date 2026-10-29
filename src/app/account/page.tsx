@@ -27,6 +27,11 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         <li><Link href="/account/notifications" className="card block p-4 font-semibold text-fg underline">Мэдэгдлүүд {unread > 0 && `(${unread} уншаагүй)`}</Link></li>
         <li><Link href="/account/wishlist" className="card block p-4 font-semibold text-fg underline">Хадгалах жагсаалт</Link></li>
         <li><Link href="/help/requests" className="card block p-4 font-semibold text-fg underline">Миний тусламжийн хүсэлтүүд</Link></li>
+        <li><Link href="/services/bookings" className="card block p-4 font-semibold text-fg underline">Миний цаг авалтууд</Link></li>
+        <li><Link href="/jobs/applications" className="card block p-4 font-semibold text-fg underline">Миний ажлын өргөдлүүд</Link></li>
+        <li><Link href="/jobs/mine" className="card block p-4 font-semibold text-fg underline">Миний ажлын зарууд</Link></li>
+        <li><Link href="/account/caregivers" className="card block p-4 font-semibold text-fg underline">Асран хамгаалагчийн зөвшөөрөл</Link></li>
+        <li><Link href="/caregiver" className="card block p-4 font-semibold text-fg underline">Миний асарч буй хүмүүс</Link></li>
         <li><Link href="/settings/accessibility" className="card block p-4 font-semibold text-fg underline">Хүртээмжийн тохиргоо</Link></li>
       </ul>
       <form action={logout} className="mt-8"><button type="submit" className="btn btn-secondary">Гарах</button></form>

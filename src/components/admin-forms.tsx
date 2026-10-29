@@ -10,7 +10,7 @@ import { ActionForm, Checkbox, Field, SubmitButton } from "./form";
 export type ProductDefaults = {
   id?: string; name?: string; categoryId?: number; summary?: string; description?: string; usage?: string; specifications?: string;
   suitableFor?: string; cautions?: string; priceMnt?: number; priceVerified?: boolean; stock?: number; deliveryInfo?: string; warrantyInfo?: string;
-  returnPolicy?: string; supplierName?: string; sourceNote?: string; condition?: string; status?: string; isFeatured?: boolean;
+  returnPolicy?: string; rentalPricePerDayMnt?: number | null; rentalDepositMnt?: number | null; rentalTerms?: string; sanitationInfo?: string; safetyInspectionInfo?: string; supplierName?: string; sourceNote?: string; condition?: string; status?: string; isFeatured?: boolean;
 };
 
 export function ProductForm({ d, cats }: { d: ProductDefaults; cats: { id: number; name: string }[] }) {
@@ -35,6 +35,15 @@ export function ProductForm({ d, cats }: { d: ProductDefaults; cats: { id: numbe
       <Field name="deliveryInfo" label="Хүргэлтийн нөхцөл" as="textarea" rows={2} defaultValue={d.deliveryInfo} />
       <Field name="warrantyInfo" label="Баталгааны нөхцөл" as="textarea" rows={2} defaultValue={d.warrantyInfo} />
       <Field name="returnPolicy" label="Буцаалтын нөхцөл" as="textarea" rows={2} defaultValue={d.returnPolicy} />
+      <fieldset className="card mb-6 p-4">
+        <legend className="px-1 text-lg font-bold">Түрээс, хуучин бүтээгдэхүүн</legend>
+        <p className="mb-3 text-muted">Түрээсийн үнэ оруулбал бүтээгдэхүүн түрээслэх боломжтой болно. Хуучин болон түрээсийн бүтээгдэхүүнийг нийтлэхэд цэвэрлэгээ, аюулгүй байдлын мэдээлэл заавал.</p>
+        <Field name="rentalPricePerDayMnt" label="Түрээсийн үнэ (хоногт, төгрөг)" type="number" inputMode="numeric" min={0} defaultValue={d.rentalPricePerDayMnt} />
+        <Field name="rentalDepositMnt" label="Барьцаа (төгрөг)" type="number" inputMode="numeric" min={0} defaultValue={d.rentalDepositMnt} />
+        <Field name="rentalTerms" label="Түрээсийн нөхцөл, хугацаа, хүргэлт" as="textarea" rows={3} defaultValue={d.rentalTerms} />
+        <Field name="sanitationInfo" label="Цэвэрлэгээ, ариутгалын мэдээлэл" as="textarea" rows={3} defaultValue={d.sanitationInfo} />
+        <Field name="safetyInspectionInfo" label="Аюулгүй байдлын шалгалтын мэдээлэл" as="textarea" rows={3} defaultValue={d.safetyInspectionInfo} />
+      </fieldset>
       <Field name="condition" as="select" label="Төлөв" defaultValue={d.condition ?? "new"} options={[{ value: "new", label: "Шинэ" }, { value: "used_inspected", label: "Шалгагдсан хуучин" }]} />
       <Field name="status" as="select" label="Нийтлэлийн төлөв" defaultValue={d.status ?? "draft"} options={[{ value: "draft", label: "Ноорог (сайтад харагдахгүй)" }, { value: "published", label: "Нийтлэх" }, { value: "archived", label: "Архивлах" }]} />
       <Checkbox name="isFeatured" label="Нүүр хуудсанд онцлох" defaultChecked={d.isFeatured} />

@@ -8,6 +8,13 @@ const LINKS = [
   ["/admin/orders", "Захиалга"],
   ["/admin/delivery", "Хүргэлтийн төрөл"],
   ["/admin/support", "Тусламжийн хүсэлт"],
+  ["/admin/services", "Үйлчилгээ"],
+  ["/admin/bookings", "Цаг авалт"],
+  ["/admin/places", "Газар"],
+  ["/admin/jobs", "Ажлын зар"],
+  ["/admin/community", "Нийгэмлэг"],
+  ["/admin/programs", "Хөтөлбөр"],
+  ["/admin/assistant", "AI туслах"],
   ["/admin/users", "Хэрэглэгч"],
   ["/admin/settings", "Тохиргоо"],
 ] as const;

@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import { expectNoA11yViolations } from "./helpers";
 
 // Нэвтрээгүй хэрэглэгчийн нийтийн хуудсууд — axe-core автомат шалгалт.
-const PAGES = ["/", "/products", "/categories", "/login", "/register", "/settings/accessibility", "/help", "/cart", "/status", "/accessibility", "/privacy", "/info/payment", "/services", "/not-a-page"];
+const PAGES = ["/", "/products", "/categories", "/login", "/register", "/settings/accessibility", "/help", "/cart", "/status", "/accessibility", "/privacy", "/info/payment", "/services", "/places", "/jobs", "/community", "/assistant", "/communication", "/support-programs", "/not-a-page"];
 
 for (const path of PAGES) {
   test(`axe: ${path}`, async ({ page }) => {

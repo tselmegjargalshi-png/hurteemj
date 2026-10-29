@@ -151,6 +151,13 @@ export const products = pgTable(
     /** Мэдээллийн эх сурвалж (үйлдвэрлэгчийн сайт гэх мэт). */
     sourceNote: text("source_note").notNull().default(""),
     condition: productCondition("condition").notNull().default("new"),
+    /** Түрээс: хоосон бол түрээслэх боломжгүй. */
+    rentalPricePerDayMnt: integer("rental_price_per_day_mnt"),
+    rentalDepositMnt: integer("rental_deposit_mnt"),
+    rentalTerms: text("rental_terms").notNull().default(""),
+    /** Цэвэрлэгээ, ариутгалын мэдээлэл ба аюулгүй байдлын шалгалт (түрээс, хуучин бүтээгдэхүүнд заавал бөглөх). */
+    sanitationInfo: text("sanitation_info").notNull().default(""),
+    safetyInspectionInfo: text("safety_inspection_info").notNull().default(""),
     categoryId: integer("category_id")
       .notNull()
       .references(() => categories.id),

@@ -10,7 +10,7 @@ import { Price, StockStatus } from "@/components/price";
 import { ProductGrid } from "@/components/product-card";
 import { ReviewForm } from "@/components/review-form";
 import { getCurrentUser } from "@/lib/auth";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatMnt } from "@/lib/format";
 import { getPreferences } from "@/lib/preferences";
 import { getProductBySlug } from "@/lib/products";
 
@@ -143,6 +143,19 @@ export default async function ProductPage({ params }: Props) {
         <Section id="s-warranty" title="Баталгаа, буцаалтын нөхцөл" open={openAll}>
           {[p.warrantyInfo, p.returnPolicy].filter(Boolean).join("\n\n") || <>Ерөнхий нөхцөл: <Link href="/info/returns" className="underline">Буцаалт, баталгаа</Link></>}
         </Section>
+        {p.rentalPricePerDayMnt != null && (
+          <Section id="s-rental" title="Түрээсийн нөхцөл" open>
+            {`Түрээсийн үнэ: ${formatMnt(p.rentalPricePerDayMnt)} / хоног${p.rentalDepositMnt != null ? `\nБарьцаа: ${formatMnt(p.rentalDepositMnt)}` : ""}${p.rentalTerms ? `\n${p.rentalTerms}` : ""}`}
+            <p className="mt-3">
+              <Link href={`/help?type=other&subject=${encodeURIComponent(`Түрээс: ${p.name}`)}`} className="btn btn-secondary">Түрээсийн хүсэлт илгээх</Link>
+            </p>
+          </Section>
+        )}
+        {(p.sanitationInfo || p.safetyInspectionInfo) && (
+          <Section id="s-safety" title="Цэвэрлэгээ, ариутгал, аюулгүй байдлын шалгалт" open>
+            {[p.sanitationInfo && `Цэвэрлэгээ, ариутгал: ${p.sanitationInfo}`, p.safetyInspectionInfo && `Аюулгүй байдлын шалгалт: ${p.safetyInspectionInfo}`].filter(Boolean).join("\n\n")}
+          </Section>
+        )}
         {p.sourceNote && <Section id="s-source" title="Мэдээллийн эх сурвалж" open={openAll}>{p.sourceNote}</Section>}
       </div>
 

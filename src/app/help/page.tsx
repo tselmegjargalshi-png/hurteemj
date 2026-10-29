@@ -5,9 +5,10 @@ import { integrationStatus } from "@/lib/integrations";
 
 export const metadata = { title: "Тусламж хүсэх" };
 
-export default async function HelpPage({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
+export default async function HelpPage({ searchParams }: { searchParams: Promise<{ type?: string; subject?: string }> }) {
   const user = await getCurrentUser();
-  const type = (await searchParams).type;
+  const sp = await searchParams;
+  const type = sp.type;
   const s = integrationStatus();
   return (
     <div className="mx-auto max-w-3xl">
@@ -23,7 +24,7 @@ export default async function HelpPage({ searchParams }: { searchParams: Promise
       </div>
       {!user && <p className="mb-4">Хүсэлтийнхээ явцыг харахын тулд <Link href="/login?next=/help" className="underline">нэвтэрнэ үү</Link>.</p>}
       <div className="card p-6">
-        <SupportRequestForm defaultName={user?.name ?? ""} loggedIn={!!user} defaultType={type} />
+        <SupportRequestForm defaultName={user?.name ?? ""} loggedIn={!!user} defaultType={type} defaultSubject={sp.subject?.slice(0, 150)} />
       </div>
       {user && <p className="mt-6"><Link href="/help/requests" className="underline">Миний өмнөх хүсэлтүүд</Link></p>}
     </div>

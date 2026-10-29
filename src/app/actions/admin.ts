@@ -36,6 +36,11 @@ const productSchema = z.object({
   supplierName: opt(200),
   sourceNote: opt(1000),
   condition: z.enum(["new", "used_inspected"]),
+  rentalPricePerDayMnt: z.union([z.literal(""), intMnt("Түрээсийн үнэ")]).transform((v) => (v === "" ? null : v)),
+  rentalDepositMnt: z.union([z.literal(""), intMnt("Барьцаа")]).transform((v) => (v === "" ? null : v)),
+  rentalTerms: opt(2000),
+  sanitationInfo: opt(2000),
+  safetyInspectionInfo: opt(2000),
   status: z.enum(["draft", "published", "archived"]),
   isFeatured: checkbox,
   imageUrl: z.union([z.literal(""), httpsUrl]).transform((v) => v || undefined),
@@ -65,6 +70,15 @@ export async function saveProduct(_prev: ActionState, fd: FormData): Promise<Act
   if (d.status === "published" && !d.imageUrl && !d.id) {
     // Нийтлэхэд зураг заавал биш, гэхдээ анхааруулга. (Админ зургийг дараа нэмж болно.)
   }
+  if (d.status === "published" && (d.condition === "used_inspected" || d.rentalPricePerDayMnt != null) && (!d.sanitationInfo || !d.safetyInspectionInfo)) {
+    return zodErrorState(
+      new z.ZodError([
+        ...(!d.sanitationInfo ? [{ code: "custom" as const, path: ["sanitationInfo"], message: "Хуучин болон түрээсийн бүтээгдэхүүнд цэвэрлэгээ, ариутгалын мэдээлэл заавал." }] : []),
+        ...(!d.safetyInspectionInfo ? [{ code: "custom" as const, path: ["safetyInspectionInfo"], message: "Хуучин болон түрээсийн бүтээгдэхүүнд аюулгүй байдлын шалгалтын мэдээлэл заавал." }] : []),
+      ]),
+      fd,
+    );
+  }
   const values = {
     name: d.name,
     categoryId: d.categoryId,
@@ -83,6 +97,11 @@ export async function saveProduct(_prev: ActionState, fd: FormData): Promise<Act
     supplierName: d.supplierName ?? "",
     sourceNote: d.sourceNote ?? "",
     condition: d.condition,
+    rentalPricePerDayMnt: d.rentalPricePerDayMnt,
+    rentalDepositMnt: d.rentalDepositMnt,
+    rentalTerms: d.rentalTerms ?? "",
+    sanitationInfo: d.sanitationInfo ?? "",
+    safetyInspectionInfo: d.safetyInspectionInfo ?? "",
     status: d.status,
     isFeatured: d.isFeatured,
     updatedAt: new Date(),

@@ -71,3 +71,74 @@ export const PRODUCT_STATUS_LABELS = {
   published: "Нийтлэгдсэн",
   archived: "Архивласан",
 } as const;
+
+export const SERVICE_CATEGORY_LABELS = {
+  rehabilitation: "Сэргээн засах үйлчилгээ",
+  equipment_repair: "Тоног төхөөрөмжийн засвар",
+  wheelchair_repair: "Тэргэнцэр, туслах төхөөрөмжийн засвар үйлчилгээ",
+  home_assistance: "Гэрийн туслах үйлчилгээ",
+  accessible_transport: "Хүртээмжтэй тээврийн үйлчилгээ",
+  sign_language: "Дохионы хэлний орчуулагч",
+  accessibility_consulting: "Хүртээмжийн зөвлөгөө",
+  caregiving: "Асран хамгаалагчийн үйлчилгээ",
+} as const;
+
+export const BOOKING_STATUS_LABELS = {
+  requested: "Хүсэлт илгээсэн",
+  confirmed: "Баталгаажсан",
+  completed: "Дууссан",
+  cancelled: "Цуцлагдсан",
+  rejected: "Татгалзсан",
+} as const;
+
+export const PLACE_TYPE_LABELS = {
+  hospital: "Эмнэлэг",
+  pharmacy: "Эмийн сан",
+  restaurant: "Ресторан",
+  shop: "Дэлгүүр",
+  government: "Төрийн байгууллага",
+  bank: "Банк",
+  education: "Сургалтын төв",
+  leisure: "Амралт, үйлчилгээний газар",
+} as const;
+
+export const PLACE_FEATURE_LABELS = {
+  ramp: "Налуу зам",
+  elevator: "Лифт",
+  wheelchair_entrance: "Тэргэнцэртэй нэвтрэх боломж",
+  accessible_toilet: "Хүртээмжтэй ариун цэврийн өрөө",
+  visual_accessibility: "Харааны хүртээмж",
+  hearing_accessibility: "Сонсголын хүртээмж",
+  accessible_parking: "Хүртээмжтэй зогсоол",
+} as const;
+
+export const FEATURE_VALUE_LABELS = { yes: "Бий", partial: "Хэсэгчлэн", no: "Байхгүй", unknown: "Мэдэгдэхгүй" } as const;
+
+export const VERIFICATION_LABELS = {
+  unverified: "Баталгаажаагүй",
+  community_reported: "Хэрэглэгчийн мэдээлсэн (баталгаажаагүй)",
+  verified: "Баталгаажсан",
+} as const;
+
+export const JOB_STATUS_LABELS = { pending_review: "Шалгагдаж байна", published: "Нийтлэгдсэн", closed: "Хаагдсан", rejected: "Татгалзсан" } as const;
+export const APPLICATION_STATUS_LABELS = { submitted: "Илгээсэн", reviewed: "Хянасан", accepted: "Зөвшөөрсөн", rejected: "Татгалзсан", withdrawn: "Буцаасан" } as const;
+
+export const POST_TYPE_LABELS = {
+  question: "Асуулт",
+  experience: "Туршлага хуваалцах",
+  event: "Арга хэмжээ",
+  training: "Сургалт",
+  volunteer: "Сайн дурын тусламж",
+  info: "Хэрэгцээт мэдээлэл",
+  feedback: "Санал хүсэлт",
+} as const;
+
+export const MODERATION_LABELS = { pending: "Хянагдаж байна", published: "Нийтлэгдсэн", hidden: "Нуусан", removed: "Устгасан" } as const;
+
+export const REPORT_REASONS = {
+  abuse: "Доромжлол, дайралт",
+  fraud: "Залилан, хуурамч зар",
+  medical: "Буруу эмчилгээний зөвлөгөө",
+  privacy: "Хувийн мэдээлэл задруулсан",
+  other: "Бусад",
+} as const;

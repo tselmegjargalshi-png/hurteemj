@@ -8,6 +8,8 @@ export const MAIN_NAV = [
   { href: "/services", label: "Үйлчилгээ" },
   { href: "/places", label: "Хүртээмжтэй газар" },
   { href: "/jobs", label: "Ажил, сургалт" },
+  { href: "/community", label: "Нийгэмлэг" },
+  { href: "/assistant", label: "AI туслах" },
   { href: "/help", label: "Тусламж" },
 ];
 

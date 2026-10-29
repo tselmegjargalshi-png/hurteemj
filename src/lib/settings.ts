@@ -8,6 +8,7 @@ export type SettingsMap = {
   bank_transfer_info: { bankName: string; accountName: string; accountNumber: string; note: string };
   store_contact: { phone: string; email: string; address: string; hours: string };
   home_announcement: { text: string };
+  assistant_config: { enabled: boolean; extraInstructions: string };
 };
 
 export async function getSetting<K extends keyof SettingsMap>(key: K): Promise<SettingsMap[K] | null> {

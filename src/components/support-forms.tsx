@@ -4,7 +4,7 @@ import { createSupportRequest, replySupport } from "@/app/actions/support";
 import { CONTACT_PREFERENCE_LABELS, SUPPORT_TYPE_LABELS } from "@/lib/labels";
 import { ActionForm, Checkbox, Field, SubmitButton } from "./form";
 
-export function SupportRequestForm({ defaultName, loggedIn, defaultType }: { defaultName: string; loggedIn: boolean; defaultType?: string }) {
+export function SupportRequestForm({ defaultName, loggedIn, defaultType, defaultSubject }: { defaultName: string; loggedIn: boolean; defaultType?: string; defaultSubject?: string }) {
   const prefOptions = Object.entries(CONTACT_PREFERENCE_LABELS)
     .filter(([k]) => loggedIn || k !== "in_app")
     .map(([value, label]) => ({ value, label }));
@@ -12,7 +12,7 @@ export function SupportRequestForm({ defaultName, loggedIn, defaultType }: { def
     <ActionForm action={createSupportRequest} label="Тусламжийн хүсэлт">
       <p className="mb-4 text-muted"><span aria-hidden="true">*</span> тэмдэгтэй талбарыг заавал бөглөнө.</p>
       <Field name="type" as="select" label="Ямар тусламж хэрэгтэй вэ?" required defaultValue={defaultType} options={Object.entries(SUPPORT_TYPE_LABELS).map(([value, label]) => ({ value, label }))} />
-      <Field name="subject" label="Гарчиг" required />
+      <Field name="subject" label="Гарчиг" required defaultValue={defaultSubject} />
       <Field name="message" label="Хүсэлтийн тайлбар" as="textarea" required hint="Юу хэрэгтэй байгааг өөрийнхөөрөө бичнэ үү. Эрүүл мэндийн нарийн мэдээлэл бичих шаардлагагүй." />
       <Field name="contactName" label="Нэр" required defaultValue={defaultName} autoComplete="name" />
       <Field name="contactPreference" as="select" label="Танд хэрхэн хариу өгөх вэ?" required options={prefOptions} hint="Бичгээр харилцахыг сонговол дуудлага хийхгүй." />

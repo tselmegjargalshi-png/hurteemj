@@ -21,6 +21,8 @@ export function Footer() {
           </h2>
           <ul className="space-y-1">
             <li><Link href="/help" className="nav-link px-0">Бичгээр тусламж хүсэх</Link></li>
+            <li><Link href="/communication" className="nav-link px-0">Харилцааны дэмжлэг</Link></li>
+            <li><Link href="/support-programs" className="nav-link px-0">Дэмжлэгийн хөтөлбөр</Link></li>
             <li><Link href="/settings/accessibility" className="nav-link px-0">Хүртээмжийн тохиргоо</Link></li>
             <li><Link href="/accessibility" className="nav-link px-0">Хүртээмжийн мэдэгдэл</Link></li>
           </ul>
