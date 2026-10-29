@@ -5,11 +5,12 @@
  */
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import { resolveDatabaseUrl } from "../src/db/url";
 import { categories } from "../src/db/schema";
 import { DEFAULT_CATEGORIES } from "../src/lib/categories";
 
 async function main() {
-  const client = postgres(process.env.DATABASE_URL!, { max: 1 });
+  const client = postgres(resolveDatabaseUrl(true)!, { max: 1 });
   const db = drizzle(client);
   for (const [i, c] of DEFAULT_CATEGORIES.entries()) {
     await db

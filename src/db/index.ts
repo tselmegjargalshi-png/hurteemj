@@ -2,8 +2,9 @@ import "server-only";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
+import { resolveDatabaseUrl } from "./url";
 
-const url = process.env.DATABASE_URL;
+const url = resolveDatabaseUrl();
 if (!url) throw new Error("DATABASE_URL тохируулаагүй байна (.env.example-г үзнэ үү).");
 
 // Dev hot-reload үед холболт давхардахгүй байх.

@@ -6,7 +6,8 @@ const run = (cmd, args) => {
   if (r.status !== 0) process.exit(r.status ?? 1);
 };
 
-if (process.env.DATABASE_URL) {
+const hasDb = Object.entries(process.env).some(([k, v]) => v && (k === "DATABASE_URL" || k.endsWith("_DATABASE_URL") || k.endsWith("_POSTGRES_URL")));
+if (hasDb) {
   run("npx", ["tsx", "scripts/migrate.ts"]);
   run("npx", ["tsx", "scripts/seed.ts"]);
   if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) run("npx", ["tsx", "scripts/create-admin.ts"]);

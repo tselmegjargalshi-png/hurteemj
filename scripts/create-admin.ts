@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import { resolveDatabaseUrl } from "../src/db/url";
 import { users } from "../src/db/schema";
 
 async function main() {
@@ -12,7 +13,7 @@ async function main() {
   if (!email || !password) throw new Error("ADMIN_EMAIL болон ADMIN_PASSWORD тохируулна уу.");
   if (password.length < 10) throw new Error("Нууц үг дор хаяж 10 тэмдэгт байх ёстой.");
 
-  const client = postgres(process.env.DATABASE_URL!, { max: 1 });
+  const client = postgres(resolveDatabaseUrl(true)!, { max: 1 });
   const db = drizzle(client);
   const passwordHash = await bcrypt.hash(password, 12);
   const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, email));
